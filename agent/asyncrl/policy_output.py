@@ -23,6 +23,9 @@ def _sample_discrete_actions(batch_probs):
     # "ValueError: sum(pvals[:-1]) > 1.0" in numpy.multinomial
     batch_probs = batch_probs - np.finfo(np.float32).epsneg
 
+    batch_probs[batch_probs < 0] = 0
+    # fix the valueError of batch_probs < 0
+
     for i in range(batch_probs.shape[0]):
         histogram = np.random.multinomial(1, batch_probs[i])
         action_indices.append(int(np.nonzero(histogram)[0]))

@@ -12,6 +12,7 @@ import logging
 from carla.driving_benchmark import run_driving_benchmark
 from carla.driving_benchmark.experiment_suites import CoRL2017, BasicExperimentSuite
 from agent.runnable_model import A3CAgent
+from agent.runnable_model import A2CAgent
 
 
 if __name__ == '__main__':
@@ -60,6 +61,20 @@ if __name__ == '__main__':
         action='store_true',
         help='If you want to continue the experiment with the same name'
     )
+    argparser.add_argument(
+        '-a', '--agent',
+        metavar='A',
+        default='a3c',
+        type=str,
+        help='Choose algorithm: a3c/a2c')
+    # argparser.add_argument(
+    #     '--agent',
+    #     metavar='A',
+    #     action='store_true',
+    #     dest='agent',
+    #     default='a3c',
+    #     help='Choose algorithm. a3c/a2c'
+    # )
 
 
     args = argparser.parse_args()
@@ -73,8 +88,13 @@ if __name__ == '__main__':
     logging.basicConfig(format='%(levelname)s: %(message)s', level=log_level)
     logging.info('listening to server %s:%s', args.host, args.port)
 
-    agent = A3CAgent(args.city_name, args_file='agent/trained_model/args.txt',
-                     model_file='agent/trained_model/9600000.h5', n_actions=9, frameskip=1)
+    
+    if args.agent == 'a2c':
+        agent = A2CAgent(args.city_name, args_file='agent/trained_model/args-a2c.txt', model_file='agent/trained_model/9600000-a2c.h5', n_actions=9, frameskip=1)
+    elif args.agent == 'a3c':
+        agent = A3CAgent(args.city_name, args_file='agent/trained_model/args.txt', model_file='agent/trained_model/9600000.h5', n_actions=9, frameskip=1)
+    else:
+        agent = A3CAgent(args.city_name, args_file='agent/trained_model/args.txt', model_file='agent/trained_model/9600000.h5', n_actions=9, frameskip=1)
 
     # We instantiate an experiment suite. Basically a set of experiments
     # that are going to be evaluated on this benchmark.
