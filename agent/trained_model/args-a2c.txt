@@ -349,7 +349,7 @@
  'nonlinearity': 'lrelu_0.1',
  'num_start_actions': 10,
  'optimizer': 'rmsprop',
- 'outdir': 'results/72_c71_doom02params',
+ 'outdir': 'results/72_c71_doom02params-a2c',
  'port': 2000,
  'processes': 10,
  'profile': False,

@@ -67,14 +67,6 @@ if __name__ == '__main__':
         default='a3c',
         type=str,
         help='Choose algorithm: a3c/a2c')
-    # argparser.add_argument(
-    #     '--agent',
-    #     metavar='A',
-    #     action='store_true',
-    #     dest='agent',
-    #     default='a3c',
-    #     help='Choose algorithm. a3c/a2c'
-    # )
 
 
     args = argparser.parse_args()
@@ -91,10 +83,13 @@ if __name__ == '__main__':
     
     if args.agent == 'a2c':
         agent = A2CAgent(args.city_name, args_file='agent/trained_model/args-a2c.txt', model_file='agent/trained_model/9600000-a2c.h5', n_actions=9, frameskip=1)
+        print('Using A2C agent....')
     elif args.agent == 'a3c':
         agent = A3CAgent(args.city_name, args_file='agent/trained_model/args.txt', model_file='agent/trained_model/9600000.h5', n_actions=9, frameskip=1)
+        print('Using A3C agent....')
     else:
         agent = A3CAgent(args.city_name, args_file='agent/trained_model/args.txt', model_file='agent/trained_model/9600000.h5', n_actions=9, frameskip=1)
+        print('Using A3C agent....')
 
     # We instantiate an experiment suite. Basically a set of experiments
     # that are going to be evaluated on this benchmark.

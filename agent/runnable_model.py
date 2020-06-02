@@ -162,7 +162,6 @@ class A2CAgent(Agent):
     def __init__(self, city_name, args_file='', model_file='', n_actions=0, frameskip=1):
         Agent.__init__(self)
         self.args = self.read_args(args_file)
-        print('self args: ', self.args)
         self.args.model = model_file
         self.n_actions = n_actions
         self.n_meas = self.compute_n_meas(self.args)
@@ -171,7 +170,6 @@ class A2CAgent(Agent):
         self.setup_data_preprocessor(self.args)
         self.frameskip = frameskip
         self.step = 0
-        print('self model: ', self.model)
 
     def run_step(self, meas, sensory, directions, target):
         # print('Step {}'.format(self.step))
@@ -208,7 +206,6 @@ class A2CAgent(Agent):
     def setup_model(self, n_actions, n_meas, args):
         self.model = rtt2.get_model(n_actions, n_meas, args)
         serializers.load_hdf5(args.model, self.model)
-        print('model name: ', self.model)
         if type(self.model).__name__ == 'A2CFF':
             self.actor = a2c.A2CActor(self.model, input_preprocess=None, random_action_prob=0.)
         else:
